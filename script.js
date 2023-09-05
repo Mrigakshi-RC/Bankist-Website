@@ -88,6 +88,24 @@ const handleHover = function (e, opacity) {
     logo.style.opacity = opacity;
   }
 };
-nav.addEventListener('mouseover', e => handleHover(e, 0.5)); 
+nav.addEventListener('mouseover', e => handleHover(e, 0.5));
 //or handleHover.bind(0.5) , handler functions can only accept 1 real argument, any extra argument would have to passed using this(bind) function
 nav.addEventListener('mouseout', e => handleHover(e, 1));
+
+//using scrollY is bad for performance, because it's gonna continuously evaluate the values
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = entries => {
+  const [entry] = entries; //first element of entries
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0, //1->will remain sticky always, 0->only when out of view , the more the value the faster it'll reappear
+  rootMargin: `-${navHeight}px`,
+});
+
+headerObserver.observe(header);
