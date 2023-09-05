@@ -13,6 +13,8 @@ const nav = document.querySelector('.nav');
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
 
 const openModal = function (e) {
   e.preventDefault();
@@ -93,9 +95,6 @@ nav.addEventListener('mouseover', e => handleHover(e, 0.5));
 nav.addEventListener('mouseout', e => handleHover(e, 1));
 
 //using scrollY is bad for performance, because it's gonna continuously evaluate the values
-const header = document.querySelector('.header');
-const navHeight = nav.getBoundingClientRect().height;
-
 const stickyNav = entries => {
   const [entry] = entries; //first element of entries
   if (!entry.isIntersecting) nav.classList.add('sticky');
